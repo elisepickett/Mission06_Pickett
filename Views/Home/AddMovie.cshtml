@@ -2,12 +2,27 @@
     ViewData["Title"] = "Add Movie";
 }
 
+@model Mission06_Pickett.Models.Movie
+
 <h1>@ViewData["Title"]</h1>
 <form method="post">
     <label>Title</label><br />
     <input type="text" name="Title" maxlength="25" /><br />
-    <label>Year</label><br />
-    <input type="number" name="Year" maxlength="25" /><br />
+    <div>
+        @* <label>Category:</label>
+        <input asp-for="Category" /> *@
+        <input type="hidden" asp-for="MovieId" />
+        <select asp-for="CategoryName">
+            <option value="">Select a Category</option>
+            @foreach (Category c in ViewBag.Categories)
+            {
+                <option value="@c.CategoryId">@c.CategoryName</option>
+            }
+        </select>
+    </div>
+    <br />
+    <label asp-for="Year">Year</label><br />
+    <input asp-for="Year" Required="true" type="number" min="1888" max="@DateTime.Now.Year" /> <br />
     <label>Director</label><br />
     <input type="text" name="Director" maxlength="25" /><br />
     <label>Rating</label><br />
@@ -27,7 +42,11 @@
     <label>Notes</label><br />
     <input type="text" name="Notes" maxlength="25" /><br />
     <br />
+    <label asp-for="CopiedtoPlex">Copied to Plex</label> <br />
+    <input type="radio" asp-for="CopiedtoPlex" value="1" /> Yes
+    <input type="radio" asp-for="CopiedtoPlex" value="0" /> No <br />
     <input type="submit" value="Add Movie" />
+
 </form>
 
 
